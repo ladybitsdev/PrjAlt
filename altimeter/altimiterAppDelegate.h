@@ -2,8 +2,8 @@
 //  altimiterAppDelegate.h
 //  altimeter
 //
-//  Created by Kristylee Gogolen on 12/26/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Created by Kristy Lee Gogolen on 12/26/12.
+//  Copyright (c) 2012 LadyBits Dev. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

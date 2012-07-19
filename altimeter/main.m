@@ -2,8 +2,8 @@
 //  main.m
 //  altimeter
 //
-//  Created by Kristylee Gogolen on 12/26/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Created by Kristy Lee Gogolen on 12/26/11.
+//  Copyright (c) 2012 __LadyBits Dev__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
