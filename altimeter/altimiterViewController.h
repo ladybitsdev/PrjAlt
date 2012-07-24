@@ -90,6 +90,7 @@
     UIButton *genericShareButton;
     UILabel *altitudePhotoView;
     UILabel *altitudePhotoViewMeasurementTitle;
+    UIButton *photoLogo;
 
     //Button views
     UIView *buttonPhotoShareView;
@@ -197,6 +198,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *altitudePhotoView;
 @property (strong, nonatomic) IBOutlet UILabel *altitudePhotoViewMeasurementTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *commaPV;
+@property (strong, nonatomic) IBOutlet UIButton *photoLogo;
+
 
 
 -(IBAction)useCamera;
@@ -210,6 +213,8 @@
 -(IBAction)saveImage;
 
 -(IBAction)shareButtonPressed:(id)sender;
+-(IBAction)removeLogo;
+-(IBAction)removeFilter;
 
 
 @end

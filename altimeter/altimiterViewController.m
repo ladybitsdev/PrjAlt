@@ -37,6 +37,7 @@
 @synthesize superTopInterface, topInterface;
 @synthesize altitudePhotoView,altitudePhotoViewMeasurementTitle, commaPV;
 @synthesize buttonAuthorView, buttonSettingsView, buttonPhotoShareView;
+@synthesize photoLogo;
 
 - (void)didReceiveMemoryWarning
 {
@@ -107,9 +108,6 @@
         if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        
-        
-    
         //resize image for memory purposes on iPhone 4
         CGSize newSize = CGSizeMake(720, 960);  
 
@@ -118,26 +116,28 @@
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
         UIGraphicsEndImageContext(); 
         
-        CIImage *cimage = [[CIImage alloc] initWithImage:newImage];
         
         //Filter    
+        CIImage *cimage = [[CIImage alloc] initWithImage:newImage];
         CIFilter *grayFilter = [CIFilter filterWithName:@"CIColorControls"];
         [grayFilter setDefaults];
         [grayFilter setValue:cimage forKey:@"inputImage"];
         
         [grayFilter setValue:[NSNumber numberWithDouble:0.0]
                       forKey:@"inputSaturation"];
-        [grayFilter setValue:[NSNumber numberWithDouble:0.4]
+        [grayFilter setValue:[NSNumber numberWithDouble:0.35]
                       forKey:@"inputBrightness"];
-        [grayFilter setValue:[NSNumber numberWithDouble:1.0]
+        [grayFilter setValue:[NSNumber numberWithDouble:1.8]
                       forKey:@"inputContrast"]; 
         
         CIImage *grayImage = [grayFilter outputImage];
         CIContext *context = [CIContext contextWithOptions:nil];
         CGImageRef cgImage = [context createCGImage:grayImage fromRect:grayImage.extent];
         resultUIImage = [UIImage imageWithCGImage:cgImage];
-        
         imageView.image = resultUIImage;
+            
+//        remove filter        
+//        imageView.image = newImage;
         
     }   
     
@@ -149,7 +149,8 @@
 
 -(void)setUpPhotoShareView {
     
-    
+    photoLogo.hidden = NO;
+
     //show or hide various elements
     superTopInterface.alpha = 1.0;
     photoFeatureView.hidden = NO;
@@ -253,6 +254,75 @@
     
     [self removePhotoShareView];
 }
+
+
+
+-(IBAction)removeLogo {
+    NSLog(@"remove logo pressed");
+
+    // create a simple alert with an OK and cancel button
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Do you want to hide the logo?"
+                          message:nil
+                          delegate:self
+                          cancelButtonTitle:@"Cancel"    
+                          otherButtonTitles:@"Yes", nil];
+    alert.tag=0;
+
+    [alert show];
+    
+}
+
+
+
+
+
+-(IBAction)removeFilter {
+//    NSLog(@"remove filter pressed");
+//    
+//    // create a simple alert with an OK and cancel button
+//    UIAlertView *alert = [[UIAlertView alloc]
+//                          initWithTitle:@"Would you like to use the original image?"
+//                          message:nil
+//                          delegate: self
+//                          cancelButtonTitle:@"Cancel"    
+//                          otherButtonTitles:@"Yes", nil];
+//    alert.tag=1;
+//
+//    [alert show];
+    
+    
+    
+}
+
+
+- (void)alertView:(UIAlertView *)alertView 
+clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if(alertView.tag==0){ //remove Logo
+        
+        if(buttonIndex == 0)//OK button pressed
+        {
+            NSLog(@"remove logo canceled");
+        }
+        else if(buttonIndex == 1)//Annul button pressed.
+        {
+            photoLogo.hidden = YES;
+        }
+    }else{ //remove Filter
+        if(buttonIndex == 0)//OK button pressed
+        { 
+            NSLog(@"remove filter canceled");
+         }
+        else if(buttonIndex == 1)//Annul button pressed.
+        {
+    //imageView.image = newImage;
+
+        }
+    }
+}
+
+
 
 
 #pragma mark - share image methods
@@ -1069,7 +1139,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 #pragma mark animation code
 
 -(void)appCloses:(NSNotification *)notification {
-    NSLog(@"app closes");
+    //NSLog(@"app closes");
     [self pretendToFreezeAnimation];
     
 }
@@ -1077,7 +1147,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
 
 -(void)appOpens:(NSNotification *)notification {
-    NSLog(@"app opens"); 
+    //NSLog(@"app opens"); 
     [self pretendToUnfreezeAnimation];
     
 }
