@@ -37,7 +37,6 @@
 @synthesize superTopInterface, topInterface;
 @synthesize altitudePhotoView,altitudePhotoViewMeasurementTitle, commaPV;
 @synthesize buttonAuthorView, buttonSettingsView, buttonPhotoShareView;
-@synthesize photoLogo;
 
 - (void)didReceiveMemoryWarning
 {
@@ -149,78 +148,57 @@
 
 -(void)setUpPhotoShareView {
     
-    photoLogo.hidden = NO;
-
     //show or hide various elements
     superTopInterface.alpha = 1.0;
     photoFeatureView.hidden = NO;
 
     altitudePhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
-    altitudePhotoViewMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
-
-    
-    //display current altitude in photo display format
-    
-//    NSLog(@"current Imperial: %g", altitudeNM); 
-//    NSLog(@"current Metric: %g", altitude);
-    
-
-   
+    altitudePhotoViewMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:20];
     
     //choose between metric and imperial
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *type = [defaults stringForKey:@"measurementType"];
 
     if([type isEqualToString: @"metric"]) {
-
         altitudeString =[NSString stringWithFormat:@"%g", floorf(altitude)];
-        //altitudeString = [NSString stringWithFormat:@"2"];    // for testing
-
+        altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
         altitudePhotoView.text = altitudeString;
-        altitudePhotoViewMeasurementTitle.text = [NSString stringWithFormat:@"Mtrs"];
-
-        
+        altitudePhotoViewMeasurementTitle.text = [NSString stringWithFormat:@"Meters"];
     } else {
-        //altitudeString = [NSString stringWithFormat:@"9999"];    // for testing
-
-        altitudeString =[NSString stringWithFormat:@"%g", floorf(altitudeNM)];
+        altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
+//        altitudeString =[NSString stringWithFormat:@"%g", floorf(altitudeNM)];
         altitudePhotoView.text = altitudeString;
-        altitudePhotoViewMeasurementTitle.text = [NSString stringWithFormat:@"Ft"];              
-
+        altitudePhotoViewMeasurementTitle.text = [NSString stringWithFormat:@"Feet"];              
     }
     
      
 //label positioning    
     if (altitudePhotoView.text.length == 1) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 181, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 175, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
         commaPV.hidden = YES;
         
     }
     if (altitudePhotoView.text.length == 2) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 140, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 134, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
         commaPV.hidden = YES;
         
     }
     if (altitudePhotoView.text.length == 3) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 99, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 93, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
         commaPV.hidden = YES;
         
     }
     if (altitudePhotoView.text.length == 4) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 57, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 51, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
         commaPV.hidden = NO;
         
     }
     if (altitudePhotoView.text.length == 5) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 20, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 14, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
         commaPV.hidden = NO;
         
     }    
     
- 
-  
-   
 
         
     [self openPVOptions];
@@ -253,73 +231,6 @@
     [self dismissModalViewControllerAnimated:YES];
     
     [self removePhotoShareView];
-}
-
-
-
--(IBAction)removeLogo {
-    NSLog(@"remove logo pressed");
-
-    // create a simple alert with an OK and cancel button
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Do you want to hide the logo?"
-                          message:nil
-                          delegate:self
-                          cancelButtonTitle:@"Cancel"    
-                          otherButtonTitles:@"Yes", nil];
-    alert.tag=0;
-
-    [alert show];
-    
-}
-
-
-
-
-
--(IBAction)removeFilter {
-//    NSLog(@"remove filter pressed");
-//    
-//    // create a simple alert with an OK and cancel button
-//    UIAlertView *alert = [[UIAlertView alloc]
-//                          initWithTitle:@"Would you like to use the original image?"
-//                          message:nil
-//                          delegate: self
-//                          cancelButtonTitle:@"Cancel"    
-//                          otherButtonTitles:@"Yes", nil];
-//    alert.tag=1;
-//
-//    [alert show];
-    
-    
-    
-}
-
-
-- (void)alertView:(UIAlertView *)alertView 
-clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    if(alertView.tag==0){ //remove Logo
-        
-        if(buttonIndex == 0)//OK button pressed
-        {
-            NSLog(@"remove logo canceled");
-        }
-        else if(buttonIndex == 1)//Annul button pressed.
-        {
-            photoLogo.hidden = YES;
-        }
-    }else{ //remove Filter
-        if(buttonIndex == 0)//OK button pressed
-        { 
-            NSLog(@"remove filter canceled");
-         }
-        else if(buttonIndex == 1)//Annul button pressed.
-        {
-    //imageView.image = newImage;
-
-        }
-    }
 }
 
 
@@ -365,11 +276,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 } 
 
 
--(IBAction)cancelImageShare:(id)sender {
-    //NSLog(@"cancel image share");
-    
+-(IBAction)cancelImageShare:(id)sender {    
     photoFeatureView.hidden = YES;
-    
     [self removePhotoShareView];
 
     
@@ -380,7 +288,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
    
     [self processImage];
 
-    
     TWTweetComposeViewController *twitter = [[TWTweetComposeViewController alloc] init];
     
     // Optional: set an image, url and initial text
@@ -393,26 +300,21 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     // Called when the tweet dialog has been closed
     twitter.completionHandler = ^(TWTweetComposeViewControllerResult result) 
     {
-        NSString *title = @"Tweet Status";
-        NSString *msg; 
-        
-        if (result == TWTweetComposeViewControllerResultCancelled)
-            msg = @"Tweet compostion was canceled.";
-        else if (result == TWTweetComposeViewControllerResultDone)
-            msg = @"Tweet composition completed.";
+//        NSString *title = @"Tweet Status";
+//        NSString *msg; 
+//        
+//        if (result == TWTweetComposeViewControllerResultCancelled)
+//            msg = @"Tweet compostion was canceled.";
+//        else if (result == TWTweetComposeViewControllerResultDone)
+//            msg = @"Tweet composition completed.";
         
         // Show alert to see how things went...
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [alertView show];
+//        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        //[alertView show];
         
         // Dismiss the controller
         [self dismissModalViewControllerAnimated:YES];
-    };
-    
-    
-    //[self removePhotoShareView];
-
-    
+    };    
 }
 
 -(IBAction)emailImage{
@@ -463,9 +365,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     //hide buttons
     photoFeatureOptionsView.hidden = YES;
     
-    
 
-    
     //canvas of image
 
     CGSize destinationSize = CGSizeMake(320, 427);
@@ -889,8 +789,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 #pragma mark - core location methods
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    //NSLog(@"error: %@",error);
-    
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error!"
          message:@"Altimiter was unable to read your altitude. Please check your wireless connection or cell service." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     
@@ -907,6 +805,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     altitude = floorf(newLocation.altitude);
     altitude = [altitudeAverage averageValueWithValue:newLocation.altitude depth:20];
+    
     
     
     // Discover metric number
@@ -949,16 +848,13 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
  }
     
     //for testing purposes- feed in sample number
-    //altitudeNotMetrics.text = [NSString stringWithFormat:@"-9"];    
+    //altitudeNotMetrics.text = [NSString stringWithFormat:@"12000"];    
    
     meters.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
     feet.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
-    
-    
     titlePhoto.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
     titleAthletes.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
-    titleDirection.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
-    
+    titleDirection.font = [UIFont fontWithName:@"Florencesans Exp" size:15];    
     linkTG.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     linkTK.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     linkPS.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
@@ -968,15 +864,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     linkFAQs.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];    
     optionsViewFtLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
     optionsViewMtrsLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
-
-    
-    
     altitudeMetrics.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
     altitudeNotMetrics.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
-
-
-    
-
 
     
     // label positioning 1
@@ -1037,11 +926,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }    
     
     
-    [spinner stopAnimating];
-    
-    
-
-                      
+    [spinner stopAnimating];                      
 }
 
 
@@ -1053,8 +938,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
     self.drawerOpen = NO;
 
-
-    
     altitudeAverage = [[T1AverageValue alloc] init];
     altitudeMetrics.hidden =YES;
     altitudeNotMetrics.hidden = YES;
@@ -1083,9 +966,22 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     imageArray = [NSArray arrayWithObjects:  
                   [UIImage imageNamed:@"image1.png"],   // tj smiling
+//                  [UIImage imageNamed:@"josh.png"],  // wee skier
                   [UIImage imageNamed:@"image2b.png"],  // snowboarder
+//                  [UIImage imageNamed:@"tomas-method.png"],  // wee skier
+                  [UIImage imageNamed:@"sierra-jumping-rocks.png"],  // wee skier
                   [UIImage imageNamed:@"image3a.png"],  // wee skier
-                  nil];
+//                  [UIImage imageNamed:@"kate-hiking.png"],  // wee skier
+                  [UIImage imageNamed:@"monarch.png"],  // wee skier
+                  [UIImage imageNamed:@"hiking.png"],  // wee skier
+//                  [UIImage imageNamed:@"kenny.png"],  // wee skier
+                  [UIImage imageNamed:@"tj-halfpipe.png"],
+                  [UIImage imageNamed:@"tj-trees.png"],
+                  [UIImage imageNamed:@"sierra-mountains.png"],
+                  [UIImage imageNamed:@"mountain-climbing.png"],
+                  [UIImage imageNamed:@"brian-jackson.png"],  // wee skier
+                  [UIImage imageNamed:@"tj-lunge-in-trees.png"],
+                 nil];
 
     
 // Just for fun, for later when object literals are supported by xcode
@@ -1141,7 +1037,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 -(void)appCloses:(NSNotification *)notification {
     //NSLog(@"app closes");
     [self pretendToFreezeAnimation];
-    
 }
 
 
@@ -1149,7 +1044,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 -(void)appOpens:(NSNotification *)notification {
     //NSLog(@"app opens"); 
     [self pretendToUnfreezeAnimation];
-    
 }
 
 - (void)pretendToUnfreezeAnimation {
@@ -1205,7 +1099,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
 
 -(void)onTimer{
-    
     // rotate previous image to bottom
     imageViewBottom.image = [imageArray objectAtIndex:prevTopIndex];
     
@@ -1228,8 +1121,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     if(topIndex >= [imageArray count]){
         topIndex = 0; 
     }
-    
-
 }
 
 
