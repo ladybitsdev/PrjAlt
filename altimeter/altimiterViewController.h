@@ -90,6 +90,8 @@
     UIButton *genericShareButton;
     UILabel *altitudePhotoView;
     UILabel *altitudePhotoViewMeasurementTitle;
+    NSString *imageOrientation;
+
 
     //Button views
     UIView *buttonPhotoShareView;

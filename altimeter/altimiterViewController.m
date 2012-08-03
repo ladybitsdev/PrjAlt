@@ -90,10 +90,7 @@
         UIAlertView *alert = [[UIAlertView alloc] 
                               initWithTitle:@"Photo Library Unavailable" message:@"Please choose another method." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
-    }
-    
-
-    
+    } 
     
 }
 
@@ -107,11 +104,51 @@
         if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        //resize image for memory purposes on iPhone 4
-        CGSize newSize = CGSizeMake(720, 960);  
+ 
+            
 
-        UIGraphicsBeginImageContext(newSize);
-        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+
+            //discover if is landscape or portrait and set key
+            if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
+                NSLog(@"landscape");  
+                
+                CGSize newSize = CGSizeMake(960, 720);  
+                
+                UIGraphicsBeginImageContext(newSize);
+                [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+                
+                
+                //set image orientation key
+                NSUserDefaults *defaultsIO = [NSUserDefaults standardUserDefaults];    
+                [defaultsIO setObject:imageOrientation forKey:@"imageOrientation"];
+                imageOrientation = @"landscape";
+                
+            }
+            
+            if (image.imageOrientation == UIImageOrientationRight || image.imageOrientation == UIImageOrientationLeft) {
+                NSLog(@"portrait");
+                
+                
+                CGSize newSize = CGSizeMake(720, 960);  
+                
+                UIGraphicsBeginImageContext(newSize);
+                [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+                
+                //set image orientation key
+                NSUserDefaults *defaultsIO = [NSUserDefaults standardUserDefaults];    
+                [defaultsIO setObject:imageOrientation forKey:@"imageOrientation"];
+                imageOrientation = @"portrait";
+
+                
+            }
+            
+imageOrientation = @"portrait";
+            
+        //resize image for memory purposes on iPhone 4
+//        CGSize newSize = CGSizeMake(720, 960);  
+//
+//        UIGraphicsBeginImageContext(newSize);
+//        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
         UIGraphicsEndImageContext(); 
         
@@ -152,8 +189,10 @@
     superTopInterface.alpha = 1.0;
     photoFeatureView.hidden = NO;
 
-    altitudePhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
-    altitudePhotoViewMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:20];
+
+    
+    
+
     
     //choose between metric and imperial
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -161,17 +200,40 @@
 
     if([type isEqualToString: @"metric"]) {
         altitudeString =[NSString stringWithFormat:@"%g", floorf(altitude)];
-        altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
+        //altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
         altitudePhotoView.text = altitudeString;
         altitudePhotoViewMeasurementTitle.text = [NSString stringWithFormat:@"Meters"];
     } else {
-        altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
-//        altitudeString =[NSString stringWithFormat:@"%g", floorf(altitudeNM)];
+        //altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
+        altitudeString =[NSString stringWithFormat:@"%g", floorf(altitudeNM)];
         altitudePhotoView.text = altitudeString;
         altitudePhotoViewMeasurementTitle.text = [NSString stringWithFormat:@"Feet"];              
     }
     
-     
+
+    
+
+    
+    //discover image orientation
+    NSUserDefaults *defaultsIO = [NSUserDefaults standardUserDefaults];
+    NSString *typeIO = [defaultsIO stringForKey:@"imageOrientation"];
+    //NSLog(@"image orientaiton: %g", typeIO);
+    
+    if([typeIO isEqualToString: @"landscape"]) {
+        NSLog(@"landscape");
+        altitudePhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
+        altitudePhotoViewMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:7];
+        
+    } else {
+        NSLog(@"portrait");
+        //altitudePhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
+        // altitudePhotoViewMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:20];
+        
+    }
+    
+    
+    
+    
 //label positioning    
     if (altitudePhotoView.text.length == 1) {
         [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 175, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
@@ -200,7 +262,6 @@
     }    
     
 
-        
     [self openPVOptions];
 
 }
@@ -229,7 +290,6 @@
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissModalViewControllerAnimated:YES];
-    
     [self removePhotoShareView];
 }
 
@@ -246,7 +306,6 @@
                                   destructiveButtonTitle:nil 
                                   otherButtonTitles:@"Tweet Photo", @"Email Photo", @"Save Photo", nil]; 
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-
     [actionSheet showInView:self.view]; 
 }
 
@@ -255,14 +314,12 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet 
 didDismissWithButtonIndex:(NSInteger)buttonIndex 
 { 
-    if (buttonIndex == 1) 
-    { 
+    if (buttonIndex == 1) { 
         [self emailImage]; 
     } 
     
     if  (buttonIndex == [actionSheet cancelButtonIndex]) {
         //[self cancelImageShare];
-        
     }
     
     if  (buttonIndex == 2) {
@@ -279,7 +336,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 -(IBAction)cancelImageShare:(id)sender {    
     photoFeatureView.hidden = YES;
     [self removePhotoShareView];
-
     
 }
 
@@ -329,9 +385,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         mailer.mailComposeDelegate = self;
         
         [mailer setSubject:@"Check out my altitude."];
-        
 
-        
         NSData *imageData = UIImagePNGRepresentation(finalImage);
         [mailer addAttachmentData:imageData mimeType:@"image/png" fileName:@"myAltitude"]; 
         
@@ -339,10 +393,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         [mailer setMessageBody:emailBody isHTML:NO];
         
         [self presentModalViewController:mailer animated:YES];
-        
-       
-
-        
+             
     }
     else
     {
@@ -368,7 +419,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
     //canvas of image
 
-    CGSize destinationSize = CGSizeMake(320, 427);
+    CGSize destinationSize = CGSizeMake(320, 426);
     
     UIGraphicsBeginImageContextWithOptions(destinationSize, NO, 0);
     
@@ -816,12 +867,31 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     // Discover english unit number
     altitudeNM = floorf(newLocation.altitude * 3.2808399);
     altitudeString = [NSString stringWithFormat:@"%g", altitudeNM];
+    //altitudeString = [NSString stringWithFormat:@"-10"];
+    
     altitudeNotMetrics.text = altitudeString;
     
+    //for testing purposes- feed in sample number
+    //altitudeNotMetrics.text = [NSString stringWithFormat:@"-2"];    
+
+    
+    if (altitudeString >= 0) {
+        //NSLog(@"positive value");
+        
+    } else { 
+        //NSLog(@"negative value");
+        altitudeMetrics.textColor = [UIColor redColor];
+        altitudeNotMetrics.textColor = [UIColor redColor];
+        meters.textColor = [UIColor redColor];
+        feet.textColor  = [UIColor redColor];
+
+    }
     
     altitudeNotMetrics.text = [NSString stringWithFormat:@"%g", altitudeNM];
 
- 
+
+
+    
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *type = [defaults stringForKey:@"measurementType"];
@@ -833,7 +903,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         meters.hidden = NO;
         altitudeNotMetrics.hidden = YES;
         altitudeMetrics.hidden = NO;
-        
         [optionsViewFtButton setSelected:NO];
         [optionsViewMtrsButton setSelected:YES];
         
@@ -842,14 +911,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         meters.hidden = YES;
         altitudeMetrics.hidden = YES;
         altitudeNotMetrics.hidden = NO;
-        
         [optionsViewMtrsButton setSelected:NO];
         [optionsViewFtButton setSelected:YES];
  }
     
-    //for testing purposes- feed in sample number
-    //altitudeNotMetrics.text = [NSString stringWithFormat:@"12000"];    
-   
+    pvCamera.titleLabel.font =  [UIFont fontWithName:@"Florencesans Exp" size:15];
+    pvLibrary.titleLabel.font =  [UIFont fontWithName:@"Florencesans Exp" size:15];
     meters.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
     feet.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
     titlePhoto.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
@@ -967,19 +1034,23 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     imageArray = [NSArray arrayWithObjects:  
                   [UIImage imageNamed:@"image1.png"],   // tj smiling
 //                  [UIImage imageNamed:@"josh.png"],  // wee skier
+                  [UIImage imageNamed:@"manuel.png"],
+                  [UIImage imageNamed:@"kayaking.png"],
+
                   [UIImage imageNamed:@"image2b.png"],  // snowboarder
-//                  [UIImage imageNamed:@"tomas-method.png"],  // wee skier
-                  [UIImage imageNamed:@"sierra-jumping-rocks.png"],  // wee skier
-                  [UIImage imageNamed:@"image3a.png"],  // wee skier
-//                  [UIImage imageNamed:@"kate-hiking.png"],  // wee skier
-                  [UIImage imageNamed:@"monarch.png"],  // wee skier
-                  [UIImage imageNamed:@"hiking.png"],  // wee skier
-//                  [UIImage imageNamed:@"kenny.png"],  // wee skier
+                  [UIImage imageNamed:@"sierra-biking.png"],  // wee skier
                   [UIImage imageNamed:@"tj-halfpipe.png"],
+
+                  [UIImage imageNamed:@"sierra-jumping.png"],  // wee skier
+                  //[UIImage imageNamed:@"image3a.png"],  // wee skier
+
+                  [UIImage imageNamed:@"eusebio-surf.png"],
+
+                  [UIImage imageNamed:@"hiking.png"],  // wee skier
+                  //[UIImage imageNamed:@"tj-halfpipe.png"],
                   [UIImage imageNamed:@"tj-trees.png"],
-                  [UIImage imageNamed:@"sierra-mountains.png"],
-                  [UIImage imageNamed:@"mountain-climbing.png"],
-                  [UIImage imageNamed:@"brian-jackson.png"],  // wee skier
+                  //[UIImage imageNamed:@"sierra-mountains.png"],
+                  [UIImage imageNamed:@"sierra-rockclimbing.png"],
                   [UIImage imageNamed:@"tj-lunge-in-trees.png"],
                  nil];
 
@@ -1059,13 +1130,13 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                          //NSLog(@"unfreeze animation completed with value %d",finished);
                          if (finished) {
                              [self startBackgroundAnimation];
-
                          }
                          else {
                              imageViewTop.alpha = 1.0;
                          }
                      }];
 }
+
 - (void)pretendToFreezeAnimation {
     [timer invalidate];
     animationStartTime = animationStartTime + kAltimiterSlideShowAdjustment;
@@ -1079,6 +1150,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
 
 }
+
 
 -(void)startBackgroundAnimation {
     
@@ -1124,11 +1196,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 }
 
 
-
-
-
-
-
 - (void)viewDidUnload
 {
     
@@ -1153,10 +1220,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
 }
-
-
 
 
 - (void)viewDidAppear:(BOOL)animated

@@ -49,6 +49,7 @@
 		E6AD0C7214A8B50F000151D5 /* altimiterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6AD0C7114A8B50F000151D5 /* altimiterViewController.m */; };
 		E6AD0C7514A8B50F000151D5 /* altimiterViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6AD0C7314A8B50F000151D5 /* altimiterViewController_iPhone.xib */; };
 		E6AD0C7F14A8B5A0000151D5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6AD0C7E14A8B5A0000151D5 /* CoreLocation.framework */; };
+		E6B7191615CAC17100070FFA /* sierra-biking.png in Resources */ = {isa = PBXBuildFile; fileRef = E6B7191515CAC17100070FFA /* sierra-biking.png */; };
 		E6BFA2CF15BFBA1C002ACAD7 /* josh.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BFA2CB15BFBA1C002ACAD7 /* josh.png */; };
 		E6BFA2D015BFBA1C002ACAD7 /* tomas-method.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BFA2CC15BFBA1C002ACAD7 /* tomas-method.png */; };
 		E6BFA2D115BFBA1C002ACAD7 /* kate-hiking.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BFA2CD15BFBA1C002ACAD7 /* kate-hiking.png */; };
@@ -74,6 +75,15 @@
 		E6D16D7015C05A5900FE416F /* tj-trees.png in Resources */ = {isa = PBXBuildFile; fileRef = E6D16D6F15C05A5900FE416F /* tj-trees.png */; };
 		E6DA12E6155194C000284193 /* image2b.png in Resources */ = {isa = PBXBuildFile; fileRef = E6DA12E4155194C000284193 /* image2b.png */; };
 		E6DA12EA15519EB600284193 /* T1AverageValue.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DA12E915519EB600284193 /* T1AverageValue.m */; };
+		E6DDFB5415C306AD001CE748 /* surf-mimi.png in Resources */ = {isa = PBXBuildFile; fileRef = E6DDFB5215C306AD001CE748 /* surf-mimi.png */; };
+		E6DDFB5515C306AD001CE748 /* eusebio-surf.png in Resources */ = {isa = PBXBuildFile; fileRef = E6DDFB5315C306AD001CE748 /* eusebio-surf.png */; };
+		E6DDFB5915C6156E001CE748 /* sierra-jumping.png in Resources */ = {isa = PBXBuildFile; fileRef = E6DDFB5715C6156E001CE748 /* sierra-jumping.png */; };
+		E6DDFB5A15C6156E001CE748 /* sierra-rockclimbing.png in Resources */ = {isa = PBXBuildFile; fileRef = E6DDFB5815C6156E001CE748 /* sierra-rockclimbing.png */; };
+		E6DDFB5C15C61884001CE748 /* kayaking.png in Resources */ = {isa = PBXBuildFile; fileRef = E6DDFB5B15C61883001CE748 /* kayaking.png */; };
+		E6F1761715C101CD00C8121E /* manuel.png in Resources */ = {isa = PBXBuildFile; fileRef = E6F1761615C101CD00C8121E /* manuel.png */; };
+		E6F1761B15C102B700C8121E /* titi.png in Resources */ = {isa = PBXBuildFile; fileRef = E6F1761915C102B700C8121E /* titi.png */; };
+		E6F1761C15C102B700C8121E /* titi2.png in Resources */ = {isa = PBXBuildFile; fileRef = E6F1761A15C102B700C8121E /* titi2.png */; };
+		E6F1761E15C10EFE00C8121E /* tubular-eusebio.png in Resources */ = {isa = PBXBuildFile; fileRef = E6F1761D15C10EFE00C8121E /* tubular-eusebio.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,6 +138,7 @@
 		E6AD0C7114A8B50F000151D5 /* altimiterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = altimiterViewController.m; sourceTree = "<group>"; };
 		E6AD0C7414A8B50F000151D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/altimiterViewController_iPhone.xib; sourceTree = "<group>"; };
 		E6AD0C7E14A8B5A0000151D5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E6B7191515CAC17100070FFA /* sierra-biking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sierra-biking.png"; sourceTree = "<group>"; };
 		E6BFA2CB15BFBA1C002ACAD7 /* josh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = josh.png; sourceTree = "<group>"; };
 		E6BFA2CC15BFBA1C002ACAD7 /* tomas-method.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tomas-method.png"; sourceTree = "<group>"; };
 		E6BFA2CD15BFBA1C002ACAD7 /* kate-hiking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kate-hiking.png"; sourceTree = "<group>"; };
@@ -155,6 +166,15 @@
 		E6DA12E4155194C000284193 /* image2b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image2b.png; sourceTree = "<group>"; };
 		E6DA12E815519EB000284193 /* T1AverageValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = T1AverageValue.h; sourceTree = "<group>"; };
 		E6DA12E915519EB600284193 /* T1AverageValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = T1AverageValue.m; sourceTree = "<group>"; };
+		E6DDFB5215C306AD001CE748 /* surf-mimi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "surf-mimi.png"; sourceTree = "<group>"; };
+		E6DDFB5315C306AD001CE748 /* eusebio-surf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eusebio-surf.png"; sourceTree = "<group>"; };
+		E6DDFB5715C6156E001CE748 /* sierra-jumping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sierra-jumping.png"; sourceTree = "<group>"; };
+		E6DDFB5815C6156E001CE748 /* sierra-rockclimbing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sierra-rockclimbing.png"; sourceTree = "<group>"; };
+		E6DDFB5B15C61883001CE748 /* kayaking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kayaking.png; sourceTree = "<group>"; };
+		E6F1761615C101CD00C8121E /* manuel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manuel.png; sourceTree = "<group>"; };
+		E6F1761915C102B700C8121E /* titi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titi.png; sourceTree = "<group>"; };
+		E6F1761A15C102B700C8121E /* titi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titi2.png; sourceTree = "<group>"; };
+		E6F1761D15C10EFE00C8121E /* tubular-eusebio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tubular-eusebio.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +212,16 @@
 		E6834DC215C07B44008215ED /* bkg animation */ = {
 			isa = PBXGroup;
 			children = (
+				E6B7191515CAC17100070FFA /* sierra-biking.png */,
+				E6DDFB5B15C61883001CE748 /* kayaking.png */,
+				E6DDFB5715C6156E001CE748 /* sierra-jumping.png */,
+				E6DDFB5815C6156E001CE748 /* sierra-rockclimbing.png */,
+				E6DDFB5215C306AD001CE748 /* surf-mimi.png */,
+				E6DDFB5315C306AD001CE748 /* eusebio-surf.png */,
+				E6F1761D15C10EFE00C8121E /* tubular-eusebio.png */,
+				E6F1761915C102B700C8121E /* titi.png */,
+				E6F1761A15C102B700C8121E /* titi2.png */,
+				E6F1761615C101CD00C8121E /* manuel.png */,
 				E6BFA2D415BFBAB2002ACAD7 /* monarch.png */,
 				E6BFA2D515BFBAB2002ACAD7 /* hiking.png */,
 				E6BFA2CB15BFBA1C002ACAD7 /* josh.png */,
@@ -421,6 +451,16 @@
 				E6D16D7015C05A5900FE416F /* tj-trees.png in Resources */,
 				E6834DBE15C06FE0008215ED /* sierra-mountains.png in Resources */,
 				E6834DC115C07AFA008215ED /* mountain-climbing.png in Resources */,
+				E6F1761715C101CD00C8121E /* manuel.png in Resources */,
+				E6F1761B15C102B700C8121E /* titi.png in Resources */,
+				E6F1761C15C102B700C8121E /* titi2.png in Resources */,
+				E6F1761E15C10EFE00C8121E /* tubular-eusebio.png in Resources */,
+				E6DDFB5415C306AD001CE748 /* surf-mimi.png in Resources */,
+				E6DDFB5515C306AD001CE748 /* eusebio-surf.png in Resources */,
+				E6DDFB5915C6156E001CE748 /* sierra-jumping.png in Resources */,
+				E6DDFB5A15C6156E001CE748 /* sierra-rockclimbing.png in Resources */,
+				E6DDFB5C15C61884001CE748 /* kayaking.png in Resources */,
+				E6B7191615CAC17100070FFA /* sierra-biking.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
