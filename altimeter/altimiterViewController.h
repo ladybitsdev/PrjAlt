@@ -49,9 +49,6 @@
     UILabel *titleAthletes;
     UILabel *titlePhoto;
     UILabel *titleDirection;
-    
-    //camera view
-    
     UIButton *linkTG;
     UIButton *linkTK;
     UIButton *linkJC;
@@ -59,6 +56,11 @@
     UIButton *linkSupport;
     UIButton *linkFAQs;
     UIButton *emailDev;
+    UIButton *linkSA;
+    UIButton *linkJH;
+    UIButton *linkMA;
+    UIButton *moreAthletes;
+    
     BOOL drawerOpen;
          
     NSTimer* timer;
@@ -88,8 +90,10 @@
     UIButton *pvSavePhoto;
     UIImage *finalImage;
     UIButton *genericShareButton;
-    UILabel *altitudePhotoView;
-    UILabel *altitudePhotoViewMeasurementTitle;
+    UILabel *altitudePortraitPhotoView;
+    UILabel *altitudeLandscapePhotoView;
+    UILabel *altitudePhotoViewPortraitMeasurementTitle;
+    UILabel *altitudePhotoViewLandscapeMeasurementTitle;
     NSString *imageOrientation;
 
 
@@ -107,7 +111,10 @@
 -(IBAction)cameraButtonPressed:(id)sender;
 
 
--(IBAction)linkTK:(id)sender;
+-(IBAction)linkSA:(id)sender;
+-(IBAction)linkJH:(id)sender;
+-(IBAction)linkMA:(id)sender;
+-(IBAction)linkMoreAthletes:(id)sender;
 -(IBAction)linkTG:(id)sender;
 -(IBAction)linkJC:(id)sender;
 -(IBAction)linkPS:(id)sender;
@@ -158,6 +165,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *linkLB;
 @property (strong, nonatomic) IBOutlet UIButton *linkSupport;
 @property (strong, nonatomic) IBOutlet UIButton *linkFAQs;
+@property (strong, nonatomic) IBOutlet UIButton *linkSA;
+@property (strong, nonatomic) IBOutlet UIButton *linkMA;
+@property (strong, nonatomic) IBOutlet UIButton *linkJH;
+@property (strong, nonatomic) IBOutlet UIButton *moreAthletes;
 
 
 // options view
@@ -196,8 +207,11 @@
 @property (strong, nonatomic) IBOutlet UIButton *pvSavePhoto;
 @property (strong, nonatomic) IBOutlet UIImage *resultUIImage; 
 @property (strong, nonatomic) IBOutlet UIImage *finalImage;
-@property (strong, nonatomic) IBOutlet UILabel *altitudePhotoView;
-@property (strong, nonatomic) IBOutlet UILabel *altitudePhotoViewMeasurementTitle;
+@property (strong, nonatomic) IBOutlet UILabel *altitudePortraitPhotoView;
+@property (strong, nonatomic) IBOutlet UILabel *altitudeLandscapePhotoView;
+
+@property (strong, nonatomic) IBOutlet UILabel *altitudePhotoViewPortraitMeasurementTitle;
+@property (strong, nonatomic) IBOutlet UILabel *altitudePhotoViewLandscapeMeasurementTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *commaPV;
 
 

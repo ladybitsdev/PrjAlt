@@ -22,6 +22,7 @@
 @synthesize altitudeAverage;
 @synthesize authorInfoView, optionsView, cameraView, photoFeatureView, photoFeatureOptionsView;
 @synthesize titleAthletes, titlePhoto, titleDirection, linkJC, linkPS, linkTG, linkTK, emailDev, linkSupport, linkFAQs;
+@synthesize linkSA, linkMA, linkJH, moreAthletes;
 @synthesize drawerOpen;
 @synthesize optionsViewFtLabel, optionsViewMtrsLabel;
 @synthesize optionsViewMtrsButton, optionsViewFtButton;
@@ -35,7 +36,7 @@
 @synthesize pvLibrary, pvCamera, pvEmailPhoto, pvSavePhoto, pvTwitter, pvFacebook;
 @synthesize resultUIImage, finalImage;
 @synthesize superTopInterface, topInterface;
-@synthesize altitudePhotoView,altitudePhotoViewMeasurementTitle, commaPV;
+@synthesize altitudePortraitPhotoView, altitudeLandscapePhotoView, altitudePhotoViewPortraitMeasurementTitle, altitudePhotoViewLandscapeMeasurementTitle, commaPV;
 @synthesize buttonAuthorView, buttonSettingsView, buttonPhotoShareView;
 
 - (void)didReceiveMemoryWarning
@@ -104,7 +105,6 @@
         if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         
- 
             
 
 
@@ -118,9 +118,7 @@
                 [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
                 
                 
-                //set image orientation key
-                NSUserDefaults *defaultsIO = [NSUserDefaults standardUserDefaults];    
-                [defaultsIO setObject:imageOrientation forKey:@"imageOrientation"];
+                //set orientation key    
                 imageOrientation = @"landscape";
                 
             }
@@ -135,14 +133,13 @@
                 [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
                 
                 //set image orientation key
-                NSUserDefaults *defaultsIO = [NSUserDefaults standardUserDefaults];    
-                [defaultsIO setObject:imageOrientation forKey:@"imageOrientation"];
                 imageOrientation = @"portrait";
 
                 
             }
             
-imageOrientation = @"portrait";
+            
+            
             
         //resize image for memory purposes on iPhone 4
 //        CGSize newSize = CGSizeMake(720, 960);  
@@ -201,33 +198,30 @@ imageOrientation = @"portrait";
     if([type isEqualToString: @"metric"]) {
         altitudeString =[NSString stringWithFormat:@"%g", floorf(altitude)];
         //altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
-        altitudePhotoView.text = altitudeString;
-        altitudePhotoViewMeasurementTitle.text = [NSString stringWithFormat:@"Meters"];
+        altitudePortraitPhotoView.text = altitudeString;
+        altitudePhotoViewPortraitMeasurementTitle.text = [NSString stringWithFormat:@"Meters"];
     } else {
         //altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
         altitudeString =[NSString stringWithFormat:@"%g", floorf(altitudeNM)];
-        altitudePhotoView.text = altitudeString;
-        altitudePhotoViewMeasurementTitle.text = [NSString stringWithFormat:@"Feet"];              
+        altitudePortraitPhotoView.text = altitudeString;
+        altitudePhotoViewPortraitMeasurementTitle.text = [NSString stringWithFormat:@"Feet"];              
     }
     
 
     
 
     
-    //discover image orientation
-    NSUserDefaults *defaultsIO = [NSUserDefaults standardUserDefaults];
-    NSString *typeIO = [defaultsIO stringForKey:@"imageOrientation"];
-    //NSLog(@"image orientaiton: %g", typeIO);
+    NSLog(@"image orientation set up view: %g", imageOrientation);
     
-    if([typeIO isEqualToString: @"landscape"]) {
+    if([imageOrientation isEqualToString: @"landscape"]) {
         NSLog(@"landscape");
-        altitudePhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
-        altitudePhotoViewMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:7];
+        altitudePortraitPhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
+        altitudePhotoViewPortraitMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:7];
         
     } else {
         NSLog(@"portrait");
-        //altitudePhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
-        // altitudePhotoViewMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:20];
+        altitudePortraitPhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
+        altitudePhotoViewPortraitMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:20];
         
     }
     
@@ -235,28 +229,28 @@ imageOrientation = @"portrait";
     
     
 //label positioning    
-    if (altitudePhotoView.text.length == 1) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 175, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+    if (altitudePortraitPhotoView.text.length == 1) {
+        [altitudePortraitPhotoView setFrame:CGRectMake(altitudePortraitPhotoView.frame.origin.x, 175, altitudePortraitPhotoView.frame.size.width, altitudePortraitPhotoView.frame.size.height)];
         commaPV.hidden = YES;
         
     }
-    if (altitudePhotoView.text.length == 2) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 134, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+    if (altitudePortraitPhotoView.text.length == 2) {
+        [altitudePortraitPhotoView setFrame:CGRectMake(altitudePortraitPhotoView.frame.origin.x, 134, altitudePortraitPhotoView.frame.size.width, altitudePortraitPhotoView.frame.size.height)];
         commaPV.hidden = YES;
         
     }
-    if (altitudePhotoView.text.length == 3) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 93, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+    if (altitudePortraitPhotoView.text.length == 3) {
+        [altitudePortraitPhotoView setFrame:CGRectMake(altitudePortraitPhotoView.frame.origin.x, 93, altitudePortraitPhotoView.frame.size.width, altitudePortraitPhotoView.frame.size.height)];
         commaPV.hidden = YES;
         
     }
-    if (altitudePhotoView.text.length == 4) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 51, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+    if (altitudePortraitPhotoView.text.length == 4) {
+        [altitudePortraitPhotoView setFrame:CGRectMake(altitudePortraitPhotoView.frame.origin.x, 51, altitudePortraitPhotoView.frame.size.width, altitudePortraitPhotoView.frame.size.height)];
         commaPV.hidden = NO;
         
     }
-    if (altitudePhotoView.text.length == 5) {
-        [altitudePhotoView setFrame:CGRectMake(altitudePhotoView.frame.origin.x, 14, altitudePhotoView.frame.size.width, altitudePhotoView.frame.size.height)];
+    if (altitudePortraitPhotoView.text.length == 5) {
+        [altitudePortraitPhotoView setFrame:CGRectMake(altitudePortraitPhotoView.frame.origin.x, 14, altitudePortraitPhotoView.frame.size.width, altitudePortraitPhotoView.frame.size.height)];
         commaPV.hidden = NO;
         
     }    
@@ -478,9 +472,9 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.tommygogolen.com"]];    
 }
 
-- (IBAction)linkTK:(id)sender {
-    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.tommyking.com"]];    
-}
+//- (IBAction)linkTK:(id)sender {
+//    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.tommyking.com"]];    
+//}
 - (IBAction)creditButtonPressed:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com"]];    
 }
@@ -488,6 +482,24 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 -(IBAction)linkLB:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com"]];    
 }
+
+-(IBAction)linkSA:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.sierraganderson.com"]];    
+}
+
+-(IBAction)linkMA:(id)sender {
+    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.memryanne.com"]];    
+}
+
+-(IBAction)linkJH:(id)sender {
+   // [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com"]];    
+}
+
+-(IBAction)linkMoreAthletes:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/altimeter/althletes/"]];    
+}
+
+
 
 - (IBAction)linkSupport:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/altimeter/support"]];    
@@ -921,10 +933,13 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     feet.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
     titlePhoto.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
     titleAthletes.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
-    titleDirection.font = [UIFont fontWithName:@"Florencesans Exp" size:15];    
+    titleDirection.font = [UIFont fontWithName:@"Florencesans Exp" size:14];    
     linkTG.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
-    linkTK.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
+    linkSA.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     linkPS.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
+    linkMA.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
+    linkJH.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
+    moreAthletes.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     linkSupport.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:15];    
     linkJC.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     emailDev.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
@@ -1033,8 +1048,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     imageArray = [NSArray arrayWithObjects:  
                   [UIImage imageNamed:@"image1.png"],   // tj smiling
-//                  [UIImage imageNamed:@"josh.png"],  // wee skier
-                  [UIImage imageNamed:@"manuel.png"],
+                  //[UIImage imageNamed:@"josh.png"],  // wee skier
+                  //[UIImage imageNamed:@"manuel.png"],
                   [UIImage imageNamed:@"kayaking.png"],
 
                   [UIImage imageNamed:@"image2b.png"],  // snowboarder
@@ -1044,7 +1059,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
                   [UIImage imageNamed:@"sierra-jumping.png"],  // wee skier
                   //[UIImage imageNamed:@"image3a.png"],  // wee skier
 
-                  [UIImage imageNamed:@"eusebio-surf.png"],
+                  //[UIImage imageNamed:@"eusebio-surf.png"],
 
                   [UIImage imageNamed:@"hiking.png"],  // wee skier
                   //[UIImage imageNamed:@"tj-halfpipe.png"],
