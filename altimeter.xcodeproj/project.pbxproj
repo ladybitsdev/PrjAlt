@@ -20,6 +20,7 @@
 		E6309D89154B341A00269702 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = E6309D88154B341A00269702 /* gradient.png */; };
 		E634C9DE15B8646000D3320B /* button-cancel-on.png in Resources */ = {isa = PBXBuildFile; fileRef = E634C9DC15B8646000D3320B /* button-cancel-on.png */; };
 		E634C9DF15B8646000D3320B /* button-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = E634C9DD15B8646000D3320B /* button-cancel.png */; };
+		E63FCF3915D3386C00FDFA36 /* bkg.png in Resources */ = {isa = PBXBuildFile; fileRef = E63FCF3815D3386C00FDFA36 /* bkg.png */; };
 		E64EC4831543394D001A7F08 /* button-options.png in Resources */ = {isa = PBXBuildFile; fileRef = E64EC47F1543394C001A7F08 /* button-options.png */; };
 		E64EC4841543394D001A7F08 /* button-info.png in Resources */ = {isa = PBXBuildFile; fileRef = E64EC4801543394D001A7F08 /* button-info.png */; };
 		E64EC48B15433D85001A7F08 /* image1.png in Resources */ = {isa = PBXBuildFile; fileRef = E64EC48915433D85001A7F08 /* image1.png */; };
@@ -101,6 +102,7 @@
 		E6309D88154B341A00269702 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gradient.png; path = ../gradient.png; sourceTree = "<group>"; };
 		E634C9DC15B8646000D3320B /* button-cancel-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-cancel-on.png"; sourceTree = "<group>"; };
 		E634C9DD15B8646000D3320B /* button-cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-cancel.png"; sourceTree = "<group>"; };
+		E63FCF3815D3386C00FDFA36 /* bkg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bkg.png; sourceTree = "<group>"; };
 		E642A36E155B587800A9A19E /* GOODTIME.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GOODTIME.ttf; sourceTree = "<group>"; };
 		E642A372155B58CA00A9A19E /* SF Automaton Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Automaton Bold.ttf"; sourceTree = "<group>"; };
 		E64EC47F1543394C001A7F08 /* button-options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-options.png"; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				E6C54D1F15AB42C100F59107 /* PV icons */,
 				E6834DC215C07B44008215ED /* bkg animation */,
 				E6C54D2215ABCD9400F59107 /* bkg-pview.png */,
+				E63FCF3815D3386C00FDFA36 /* bkg.png */,
 				E6C54D2415ACC17900F59107 /* blur.png */,
 				E6C54D2615AE649500F59107 /* icon-share.png */,
 				E6C54D2F15AF564D00F59107 /* bkg-cameraView.png */,
@@ -461,6 +464,7 @@
 				E6DDFB5A15C6156E001CE748 /* sierra-rockclimbing.png in Resources */,
 				E6DDFB5C15C61884001CE748 /* kayaking.png in Resources */,
 				E6B7191615CAC17100070FFA /* sierra-biking.png in Resources */,
+				E63FCF3915D3386C00FDFA36 /* bkg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,7 +565,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "altimeter/altimeter-Prefix.pch";
 				INFOPLIST_FILE = "altimeter/altimeter-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7EFB7C05-3C93-4CC2-B545-5A619C2746DC";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7EFB7C05-3C93-4CC2-B545-5A619C2746DC";
@@ -581,7 +585,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "altimeter/altimeter-Prefix.pch";
 				INFOPLIST_FILE = "altimeter/altimeter-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7EFB7C05-3C93-4CC2-B545-5A619C2746DC";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7EFB7C05-3C93-4CC2-B545-5A619C2746DC";

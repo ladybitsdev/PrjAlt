@@ -72,6 +72,7 @@
     
     //photo feature
     UIImageView * imageView;
+    UIImageView * imageView2;
 	UIButton * choosePhotoBtn;
 	UIButton * takePhotoBtn;
     UIView *photoFeatureView;
@@ -95,6 +96,9 @@
     UILabel *altitudePhotoViewPortraitMeasurementTitle;
     UILabel *altitudePhotoViewLandscapeMeasurementTitle;
     NSString *imageOrientation;
+    UIView *photoViewPhotoPortrait;
+    UIView *photoViewPhotoLandscape;
+    UIImage *image;
 
 
     //Button views
@@ -192,6 +196,7 @@
 
 // photo sharing feature
 @property (nonatomic, retain) IBOutlet UIImageView * imageView;
+@property (nonatomic, retain) IBOutlet UIImageView * imageView2;
 @property (nonatomic, retain) IBOutlet UIButton *genericShareButton;
 @property (nonatomic, retain) IBOutlet UIButton * takePhotoBtn;
 @property (strong, nonatomic) IBOutlet UIView *photoFeatureView;
@@ -213,7 +218,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *altitudePhotoViewPortraitMeasurementTitle;
 @property (strong, nonatomic) IBOutlet UILabel *altitudePhotoViewLandscapeMeasurementTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *commaPV;
+@property (strong, nonatomic) IBOutlet UIView *photoViewPhotoLandscape;
+@property (strong, nonatomic) IBOutlet UIView *photoViewPhotoPortrait;
 
+@property (strong, nonatomic) IBOutlet UIImage *image;
 
 
 -(IBAction)useCamera;

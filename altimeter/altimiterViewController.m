@@ -29,15 +29,15 @@
 @synthesize linkLB;
 @synthesize timer;
 @synthesize cameraButton;
-@synthesize imageView, takePhotoBtn, photoView;
+@synthesize imageView, imageView2, takePhotoBtn, photoView;
 @synthesize genericShareButton;
 @synthesize saveButton;
 @synthesize cancelButton;
 @synthesize pvLibrary, pvCamera, pvEmailPhoto, pvSavePhoto, pvTwitter, pvFacebook;
-@synthesize resultUIImage, finalImage;
+@synthesize resultUIImage, finalImage, image;
 @synthesize superTopInterface, topInterface;
 @synthesize altitudePortraitPhotoView, altitudeLandscapePhotoView, altitudePhotoViewPortraitMeasurementTitle, altitudePhotoViewLandscapeMeasurementTitle, commaPV;
-@synthesize buttonAuthorView, buttonSettingsView, buttonPhotoShareView;
+@synthesize buttonAuthorView, buttonSettingsView, buttonPhotoShareView, photoViewPhotoPortrait, photoViewPhotoLandscape;
 
 - (void)didReceiveMemoryWarning
 {
@@ -98,17 +98,56 @@
 
 
 
+//- (UIImage *)scaleAndRotateImage:(UIImage *)image {
+//    int kMaxResolution = 640; // Or whatever
+//    
+//    CGImageRef imgRef = image.CGImage;
+//    
+//    CGFloat width = CGImageGetWidth(imgRef);
+//    CGFloat height = CGImageGetHeight(imgRef);
+//    
+//    
+//    CGAffineTransform transform = CGAffineTransformIdentity;
+//    CGRect bounds = CGRectMake(0, 0, width, height);
+//    if (width > kMaxResolution || height > kMaxResolution) {
+//        CGFloat ratio = width/height;
+//        if (ratio > 1) {
+//            bounds.size.width = kMaxResolution;
+//            bounds.size.height = roundf(bounds.size.width / ratio);
+//        }
+//        else {
+//            bounds.size.height = kMaxResolution;
+//            bounds.size.width = roundf(bounds.size.height * ratio);
+//        }
+//    }
+//    
+//    CGFloat scaleRatio = bounds.size.width / width;
+//    CGSize imageSize = CGSizeMake(CGImageGetWidth(imgRef), CGImageGetHeight(imgRef));
+//    CGFloat boundHeight;
+//    UIImageOrientation orient = image.imageOrientation;
+//    switch(orient) {
+//            
+//        case UIImageOrientationUp: //EXIF = 1
+//            transform = CGAffineTransformIdentity;
+//            break;
+//            
+//    }
+//}
+
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo: (NSDictionary *)info {
     
         NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
         [self dismissModalViewControllerAnimated:YES];
         if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
         
+                    
             
+//            image = scaleAndRotateImage(image);
 
 
-            //discover if is landscape or portrait and set key
+            //discover if is landscape or portrait and set key and resize image accordingly
             if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
                 NSLog(@"landscape");  
                 
@@ -140,16 +179,18 @@
             
             
             
-            
-        //resize image for memory purposes on iPhone 4
-//        CGSize newSize = CGSizeMake(720, 960);  
-//
-//        UIGraphicsBeginImageContext(newSize);
-//        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
         UIGraphicsEndImageContext(); 
         
-        
+  
+            if (!([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0))) {	
+                NSLog(@"retina available");
+            } else {
+                NSLog(@"retina not available");
+
+            }
+            
         //Filter    
         CIImage *cimage = [[CIImage alloc] initWithImage:newImage];
         CIFilter *grayFilter = [CIFilter filterWithName:@"CIColorControls"];
@@ -168,6 +209,7 @@
         CGImageRef cgImage = [context createCGImage:grayImage fromRect:grayImage.extent];
         resultUIImage = [UIImage imageWithCGImage:cgImage];
         imageView.image = resultUIImage;
+        imageView2.image = resultUIImage;
             
 //        remove filter        
 //        imageView.image = newImage;
@@ -186,10 +228,6 @@
     superTopInterface.alpha = 1.0;
     photoFeatureView.hidden = NO;
 
-
-    
-    
-
     
     //choose between metric and imperial
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -199,27 +237,40 @@
         altitudeString =[NSString stringWithFormat:@"%g", floorf(altitude)];
         //altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
         altitudePortraitPhotoView.text = altitudeString;
+        altitudeLandscapePhotoView.text = altitudeString;
         altitudePhotoViewPortraitMeasurementTitle.text = [NSString stringWithFormat:@"Meters"];
+        altitudePhotoViewLandscapeMeasurementTitle.text = [NSString stringWithFormat:@"Meters"];
+
+        
     } else {
         //altitudeString = [NSString stringWithFormat:@"10000"];    // for testing
         altitudeString =[NSString stringWithFormat:@"%g", floorf(altitudeNM)];
         altitudePortraitPhotoView.text = altitudeString;
-        altitudePhotoViewPortraitMeasurementTitle.text = [NSString stringWithFormat:@"Feet"];              
+        altitudeLandscapePhotoView.text = altitudeString;
+        altitudePhotoViewPortraitMeasurementTitle.text = [NSString stringWithFormat:@"Feet"];
+        altitudePhotoViewLandscapeMeasurementTitle.text = [NSString stringWithFormat:@"Feet"];
+
     }
     
 
     
 
     
-    NSLog(@"image orientation set up view: %g", imageOrientation);
-    
+//set out layout of photo based on image orientation    
     if([imageOrientation isEqualToString: @"landscape"]) {
         NSLog(@"landscape");
-        altitudePortraitPhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:15];
-        altitudePhotoViewPortraitMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:7];
+        photoViewPhotoLandscape.hidden = NO;
+        photoViewPhotoPortrait.hidden = YES;
+
+        altitudeLandscapePhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:40];
+        altitudePhotoViewLandscapeMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:10];
         
     } else {
         NSLog(@"portrait");
+    
+        photoViewPhotoPortrait.hidden = NO;
+        photoViewPhotoLandscape.hidden = YES;
+        
         altitudePortraitPhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
         altitudePhotoViewPortraitMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:20];
         
@@ -342,7 +393,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     // Optional: set an image, url and initial text
     [twitter addImage:finalImage];
-//    [twitter setInitialText:@"Tweet from iOS 5 app using the Twitter framework."];
     
     // Show the controller
     [self presentModalViewController:twitter animated:YES];
@@ -413,15 +463,37 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
     //canvas of image
 
-    CGSize destinationSize = CGSizeMake(320, 426);
     
-    UIGraphicsBeginImageContextWithOptions(destinationSize, NO, 0);
+    if([imageOrientation isEqualToString: @"landscape"]) {
+        photoViewPhotoPortrait.hidden = YES;
+        photoViewPhotoLandscape.hidden = NO;
     
-    CGContextRef ctx = UIGraphicsGetCurrentContext();      
+        CGSize destinationSize = CGSizeMake(320, 240);
+        UIGraphicsBeginImageContextWithOptions(destinationSize, NO, 0);
+        
+        CGContextRef ctx = UIGraphicsGetCurrentContext();      
+        
+        [self.view.layer renderInContext:ctx];
+        finalImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+    } else {
+        photoViewPhotoLandscape.hidden = YES;
+        photoViewPhotoPortrait.hidden = NO;
 
-	[self.view.layer renderInContext:ctx];
-	finalImage = UIGraphicsGetImageFromCurrentImageContext();
-	UIGraphicsEndImageContext();
+        CGSize destinationSize = CGSizeMake(320, 426);
+        UIGraphicsBeginImageContextWithOptions(destinationSize, NO, 0);
+        
+        CGContextRef ctx = UIGraphicsGetCurrentContext();      
+        
+        [self.view.layer renderInContext:ctx];
+        finalImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        
+    }
+    
+    
     
     //don't save here, save manually
 	//UIImageWriteToSavedPhotosAlbum(finalImage, nil, nil, nil);
@@ -883,8 +955,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     altitudeNotMetrics.text = altitudeString;
     
-    //for testing purposes- feed in sample number
-    //altitudeNotMetrics.text = [NSString stringWithFormat:@"-2"];    
+   
 
     
     if (altitudeString >= 0) {
@@ -902,7 +973,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     altitudeNotMetrics.text = [NSString stringWithFormat:@"%g", altitudeNM];
 
 
-
+    //for testing purposes- feed in sample number
+    //altitudeNotMetrics.text = [NSString stringWithFormat:@"10000"]; 
     
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -927,6 +999,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         [optionsViewFtButton setSelected:YES];
  }
     
+    
+    //worst way possible for adding custom fonts
     pvCamera.titleLabel.font =  [UIFont fontWithName:@"Florencesans Exp" size:15];
     pvLibrary.titleLabel.font =  [UIFont fontWithName:@"Florencesans Exp" size:15];
     meters.font = [UIFont fontWithName:@"Florencesans Exp" size:15];

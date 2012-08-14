@@ -21,13 +21,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "altimeter/altimiterViewController.m"
-         timestampString = "365731417.838783"
+         timestampString = "366161280.640915"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "856"
-         endingLineNumber = "856"
-         landmarkName = "-locationManager:didFailWithError:"
-         landmarkType = "5">
+         startingLineNumber = "924"
+         endingLineNumber = "924"
+         landmarkName = "@implementation altimiterViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -43,15 +43,28 @@
          landmarkType = "2">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "altimeter/altimiterViewController.m"
-         timestampString = "365732232.894588"
+         timestampString = "366161280.640915"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
+         startingLineNumber = "279"
+         endingLineNumber = "279"
+         landmarkName = "-setUpPhotoShareView"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "altimeter/altimiterViewController.m"
+         timestampString = "366161280.640915"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "280"
+         endingLineNumber = "280"
          landmarkName = "-setUpPhotoShareView"
          landmarkType = "5">
       </FileBreakpoint>
