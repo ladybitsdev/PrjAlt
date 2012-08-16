@@ -60,7 +60,8 @@
     UIButton *linkJH;
     UIButton *linkMA;
     UIButton *moreAthletes;
-    
+    UIButton *morePhotographers;
+  
     BOOL drawerOpen;
          
     NSTimer* timer;
@@ -119,6 +120,8 @@
 -(IBAction)linkJH:(id)sender;
 -(IBAction)linkMA:(id)sender;
 -(IBAction)linkMoreAthletes:(id)sender;
+-(IBAction)linkMorePhotographers:(id)sender;
+
 -(IBAction)linkTG:(id)sender;
 -(IBAction)linkJC:(id)sender;
 -(IBAction)linkPS:(id)sender;
@@ -173,6 +176,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *linkMA;
 @property (strong, nonatomic) IBOutlet UIButton *linkJH;
 @property (strong, nonatomic) IBOutlet UIButton *moreAthletes;
+@property (strong, nonatomic) IBOutlet UIButton *morePhotographers;
 
 
 // options view

@@ -22,7 +22,7 @@
 @synthesize altitudeAverage;
 @synthesize authorInfoView, optionsView, cameraView, photoFeatureView, photoFeatureOptionsView;
 @synthesize titleAthletes, titlePhoto, titleDirection, linkJC, linkPS, linkTG, linkTK, emailDev, linkSupport, linkFAQs;
-@synthesize linkSA, linkMA, linkJH, moreAthletes;
+@synthesize linkSA, linkMA, linkJH, moreAthletes, morePhotographers;
 @synthesize drawerOpen;
 @synthesize optionsViewFtLabel, optionsViewMtrsLabel;
 @synthesize optionsViewMtrsButton, optionsViewFtButton;
@@ -69,11 +69,7 @@
                               initWithTitle:@"Camera Unavailable" message:@"You do not have a camera. Please choose another method." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
-    
 
-
-
-    
 }
 
 
@@ -97,44 +93,6 @@
 
 
 
-
-//- (UIImage *)scaleAndRotateImage:(UIImage *)image {
-//    int kMaxResolution = 640; // Or whatever
-//    
-//    CGImageRef imgRef = image.CGImage;
-//    
-//    CGFloat width = CGImageGetWidth(imgRef);
-//    CGFloat height = CGImageGetHeight(imgRef);
-//    
-//    
-//    CGAffineTransform transform = CGAffineTransformIdentity;
-//    CGRect bounds = CGRectMake(0, 0, width, height);
-//    if (width > kMaxResolution || height > kMaxResolution) {
-//        CGFloat ratio = width/height;
-//        if (ratio > 1) {
-//            bounds.size.width = kMaxResolution;
-//            bounds.size.height = roundf(bounds.size.width / ratio);
-//        }
-//        else {
-//            bounds.size.height = kMaxResolution;
-//            bounds.size.width = roundf(bounds.size.height * ratio);
-//        }
-//    }
-//    
-//    CGFloat scaleRatio = bounds.size.width / width;
-//    CGSize imageSize = CGSizeMake(CGImageGetWidth(imgRef), CGImageGetHeight(imgRef));
-//    CGFloat boundHeight;
-//    UIImageOrientation orient = image.imageOrientation;
-//    switch(orient) {
-//            
-//        case UIImageOrientationUp: //EXIF = 1
-//            transform = CGAffineTransformIdentity;
-//            break;
-//            
-//    }
-//}
-
-
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo: (NSDictionary *)info {
     
         NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
@@ -142,40 +100,57 @@
         if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
         image = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-                    
+            CGSize size = [image size];
             
-//            image = scaleAndRotateImage(image);
-
-
-            //discover if is landscape or portrait and set key and resize image accordingly
-            if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
-                NSLog(@"landscape");  
-                
-                CGSize newSize = CGSizeMake(960, 720);  
-                
-                UIGraphicsBeginImageContext(newSize);
-                [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-                
-                
-                //set orientation key    
-                imageOrientation = @"landscape";
-                
-            }
-            
-            if (image.imageOrientation == UIImageOrientationRight || image.imageOrientation == UIImageOrientationLeft) {
-                NSLog(@"portrait");
-                
-                
-                CGSize newSize = CGSizeMake(720, 960);  
-                
-                UIGraphicsBeginImageContext(newSize);
-                [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-                
-                //set image orientation key
+            CGSize newSize;
+            if (size.height >= size.width) {
+                //NSLog(@"portrait");  
+                 newSize= CGSizeMake(720, 960); 
                 imageOrientation = @"portrait";
-
-                
             }
+            else {
+                //NSLog(@"landscape");
+                newSize = CGSizeMake(960, 720); 
+                imageOrientation = @"landscape";
+            }
+            UIGraphicsBeginImageContext(newSize);
+            [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+            
+//            //discover if is landscape or portrait and set key and resize image accordingly
+//            if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
+//                NSLog(@"landscape");  
+//                
+//                CGSize newSize = CGSizeMake(960, 720);  
+//                
+//                UIGraphicsBeginImageContext(newSize);
+//                [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+//                
+//                
+//                //set orientation key    
+//                imageOrientation = @"landscape";
+//                
+//            }
+//            
+//            if (image.imageOrientation == UIImageOrientationRight || image.imageOrientation == UIImageOrientationLeft) {
+//                NSLog(@"portrait");
+//                
+//                
+//                CGSize newSize = CGSizeMake(720, 960);  
+//                
+//                UIGraphicsBeginImageContext(newSize);
+//                [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+//                
+//                //set image orientation key
+//                imageOrientation = @"portrait";
+//
+//                
+//            }
+            
+            
+            if (!([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0))) {	
+                // it's retina
+            }
+
             
             
             
@@ -183,13 +158,6 @@
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
         UIGraphicsEndImageContext(); 
         
-  
-            if (!([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0))) {	
-                NSLog(@"retina available");
-            } else {
-                NSLog(@"retina not available");
-
-            }
             
         //Filter    
         CIImage *cimage = [[CIImage alloc] initWithImage:newImage];
@@ -258,26 +226,20 @@
     
 //set out layout of photo based on image orientation    
     if([imageOrientation isEqualToString: @"landscape"]) {
-        NSLog(@"landscape");
+        //NSLog(@"landscape");
         photoViewPhotoLandscape.hidden = NO;
         photoViewPhotoPortrait.hidden = YES;
 
         altitudeLandscapePhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:40];
         altitudePhotoViewLandscapeMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:10];
         
-    } else {
-        NSLog(@"portrait");
-    
+    } else {    
         photoViewPhotoPortrait.hidden = NO;
         photoViewPhotoLandscape.hidden = YES;
         
         altitudePortraitPhotoView.font = [UIFont fontWithName:@"Florencesans Exp" size:75];
         altitudePhotoViewPortraitMeasurementTitle.font = [UIFont fontWithName:@"Florencesans Exp" size:20];
-        
     }
-    
-    
-    
     
 //label positioning    
     if (altitudePortraitPhotoView.text.length == 1) {
@@ -391,9 +353,10 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
     TWTweetComposeViewController *twitter = [[TWTweetComposeViewController alloc] init];
     
-    // Optional: set an image, url and initial text
     [twitter addImage:finalImage];
-    
+    [twitter setInitialText:@"#ExploreMoreApp"];
+
+
     // Show the controller
     [self presentModalViewController:twitter animated:YES];
     
@@ -428,12 +391,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         
         mailer.mailComposeDelegate = self;
         
-        [mailer setSubject:@"Check out my altitude."];
+        [mailer setSubject:@"Explore More!"];
 
         NSData *imageData = UIImagePNGRepresentation(finalImage);
-        [mailer addAttachmentData:imageData mimeType:@"image/png" fileName:@"myAltitude"]; 
+        [mailer addAttachmentData:imageData mimeType:@"image/png" fileName:@"ExploreMore"]; 
         
-        NSString *emailBody = @"Check out my altitude.";
+        NSString *emailBody = @"Explore More!";
         [mailer setMessageBody:emailBody isHTML:NO];
         
         [self presentModalViewController:mailer animated:YES];
@@ -452,18 +415,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 }
 
 
-
-
-
 -(void)processImage {
     
     //hide buttons
     photoFeatureOptionsView.hidden = YES;
     
-
     //canvas of image
-
-    
     if([imageOrientation isEqualToString: @"landscape"]) {
         photoViewPhotoPortrait.hidden = YES;
         photoViewPhotoLandscape.hidden = NO;
@@ -490,13 +447,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         finalImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
 
-        
     }
-    
-    
-    
-    //don't save here, save manually
-	//UIImageWriteToSavedPhotosAlbum(finalImage, nil, nil, nil);
     
     
     //close and go to share choices
@@ -510,8 +461,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [self processImage];
 	UIImageWriteToSavedPhotosAlbum(finalImage, nil, nil, nil);
 
-    
-    
     NSString *msg; 
     NSString *title = @"Image Saved!";
     
@@ -544,9 +493,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.tommygogolen.com"]];    
 }
 
-//- (IBAction)linkTK:(id)sender {
-//    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.tommyking.com"]];    
-//}
+
 - (IBAction)creditButtonPressed:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com"]];    
 }
@@ -560,25 +507,27 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 }
 
 -(IBAction)linkMA:(id)sender {
-    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.memryanne.com"]];    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.sierraganderson.com"]];    
 }
 
 -(IBAction)linkJH:(id)sender {
-   // [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com"]];    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.summitmultimedia.com/photo-portfolio/"]];    
 }
 
 -(IBAction)linkMoreAthletes:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/altimeter/althletes/"]];    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/explore-more-altimeter-app/artwork/"]];    
 }
 
-
+-(IBAction)linkMorePhotographers:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/explore-more-altimeter-app/artwork/"]];    
+}
 
 - (IBAction)linkSupport:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/altimeter/support"]];    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/explore-more-altimeter-app/support"]];    
 }
 
 - (IBAction)linkFAQs:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/altimeter/faqs"]];    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.ladybitsdev.com/explore-more-altimeter-app/support/"]];    
 }
 
 - (IBAction)emailDev:(id)sender {
@@ -589,9 +538,9 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         
         mailer.mailComposeDelegate = self;
         
-        [mailer setSubject:@"To LadyBit Development Team"];
+        [mailer setSubject:@"To LadyBits Development Team"];
         
-        NSArray *toRecipients = [NSArray arrayWithObjects:@"kl@ladybitsdev.com", nil];
+        NSArray *toRecipients = [NSArray arrayWithObjects:@"info@ladybitsdev.com", nil];
         [mailer setToRecipients:toRecipients];
         
                 
@@ -1014,6 +963,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     linkMA.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     linkJH.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     moreAthletes.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
+    morePhotographers.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     linkSupport.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:15];    
     linkJC.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
     emailDev.titleLabel.font = [UIFont fontWithName:@"Florencesans Exp" size:12];
@@ -1121,25 +1071,18 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     
     imageArray = [NSArray arrayWithObjects:  
-                  [UIImage imageNamed:@"image1.png"],   // tj smiling
-                  //[UIImage imageNamed:@"josh.png"],  // wee skier
-                  //[UIImage imageNamed:@"manuel.png"],
-                  [UIImage imageNamed:@"kayaking.png"],
 
+                  [UIImage imageNamed:@"image1.png"],  //tj smiling
+                  [UIImage imageNamed:@"sierra-jumping.png"],  
                   [UIImage imageNamed:@"image2b.png"],  // snowboarder
-                  [UIImage imageNamed:@"sierra-biking.png"],  // wee skier
                   [UIImage imageNamed:@"tj-halfpipe.png"],
-
-                  [UIImage imageNamed:@"sierra-jumping.png"],  // wee skier
-                  //[UIImage imageNamed:@"image3a.png"],  // wee skier
-
-                  //[UIImage imageNamed:@"eusebio-surf.png"],
-
-                  [UIImage imageNamed:@"hiking.png"],  // wee skier
-                  //[UIImage imageNamed:@"tj-halfpipe.png"],
-                  [UIImage imageNamed:@"tj-trees.png"],
-                  //[UIImage imageNamed:@"sierra-mountains.png"],
+                  [UIImage imageNamed:@"hiking.png"],  
                   [UIImage imageNamed:@"sierra-rockclimbing.png"],
+                  [UIImage imageNamed:@"tj-trees.png"],
+                  [UIImage imageNamed:@"tomas-method.png"],  
+                  [UIImage imageNamed:@"sierra-biking.png"],
+                  [UIImage imageNamed:@"kayaking.png"],
+                  [UIImage imageNamed:@"brian-jackson.png"],
                   [UIImage imageNamed:@"tj-lunge-in-trees.png"],
                  nil];
 
@@ -1156,8 +1099,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCloses:) name:@"UIApplicationDidEnterBackgroundNotification" object:nil];
     
-
- //   [self imageAnimation];
     
     // initialize this here for first time use
     imageViewTopStoredAlpha = 1.0;
@@ -1195,7 +1136,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 #pragma mark animation code
 
 -(void)appCloses:(NSNotification *)notification {
-    //NSLog(@"app closes");
     [self pretendToFreezeAnimation];
 }
 
@@ -1334,7 +1274,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     return (interfaceOrientation == UIInterfaceOrientationPortrait ||
 
     interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown );
-
 
 }
 
